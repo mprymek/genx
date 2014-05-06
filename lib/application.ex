@@ -45,14 +45,14 @@ defmodule Application do
   Returns application's environment as a keyword
   """
   def environment(application) do
-      Keyword.from_enum(:application.get_all_env(application))
+      Keyword.new(:application.get_all_env(application))
   end
 
   @doc """
   Returns current application's environment as a keyword
   """
   def environment do
-      Keyword.from_enum(:application.get_all_env)
+      Keyword.new(:application.get_all_env)
   end
   
 end

@@ -6,7 +6,7 @@ defmodule GenX.GenEvent do
                 true -> :sync_notify
                 false -> :notify
            end
-    defhandler(:handle_event, {:gen_event, notify}, event, Keyword.from_enum(options ++ body))
+    defhandler(:handle_event, {:gen_event, notify}, event, Keyword.new(options ++ body))
   end
 
   defmacro defevent(event, body) do
@@ -18,7 +18,7 @@ defmodule GenX.GenEvent do
                  nil -> []
                  v -> [v]
             end
-    defhandler(:handle_call, {:gen_event, :call}, call, Keyword.from_enum(options ++ body), [before_request: [(quote do: __MODULE__)], send: send])
+    defhandler(:handle_call, {:gen_event, :call}, call, Keyword.new(options ++ body), [before_request: [(quote do: __MODULE__)], send: send])
   end
 
   defmacro defcall(call, body) do
@@ -26,7 +26,7 @@ defmodule GenX.GenEvent do
   end
 
   defmacro definfo(info, options, body) do
-    defhandler(:handle_info, {:erlang, :send}, info, Keyword.from_enum(options ++ body))
+    defhandler(:handle_info, {:erlang, :send}, info, Keyword.new(options ++ body))
   end
 
   defmacro definfo(info, body) do

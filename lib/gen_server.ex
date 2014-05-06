@@ -78,7 +78,7 @@ defmodule GenX.GenServer do
              nil -> []
              v -> [v]
            end
-    defhandler(:handle_call, {:gen_server, :call}, call, Keyword.from_enum(options ++ body), [handle: [:from], send: send])
+    defhandler(:handle_call, {:gen_server, :call}, call, Keyword.new(options ++ body), [handle: [:from], send: send])
   end
 
   @doc handle_call_doc
@@ -121,7 +121,7 @@ defmodule GenX.GenServer do
 
   @doc handle_cast_doc
   defmacro defcast(cast, options, body) do
-    defhandler(:handle_cast, {:gen_server, :cast}, cast, Keyword.from_enum(options ++ body))
+    defhandler(:handle_cast, {:gen_server, :cast}, cast, Keyword.new(options ++ body))
   end
   @doc handle_cast_doc
   defmacro defcast(cast, body) do
@@ -163,7 +163,7 @@ defmodule GenX.GenServer do
 
   @doc handle_info_doc
   defmacro definfo(info, options, body) do
-    defhandler(:handle_info, {:erlang, :send}, info, Keyword.from_enum(options ++ body))
+    defhandler(:handle_info, {:erlang, :send}, info, Keyword.new(options ++ body))
   end
   @doc handle_info_doc
   defmacro definfo(info, body) do

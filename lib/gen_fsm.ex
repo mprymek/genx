@@ -18,7 +18,7 @@ defmodule GenX.GenFsm do
              nil -> []
              v -> [v]
            end
-    defhandler(handler, {:gen_fsm, event_sender}, event, Keyword.from_enum(options ++ body), [handle: handle, send: send])
+    defhandler(handler, {:gen_fsm, event_sender}, event, Keyword.new(options ++ body), [handle: handle, send: send])
    end
 
    defmacro defevent(event, options, body) do
@@ -30,7 +30,7 @@ defmodule GenX.GenFsm do
    end
 
    defmacro definfo(info, options, body) do
-    defhandler(:handle_info, {:erlang, :send}, info, Keyword.from_enum(options ++ body), [handle: [:state_name]])
+    defhandler(:handle_info, {:erlang, :send}, info, Keyword.new(options ++ body), [handle: [:state_name]])
    end
 
    defmacro definfo(info, body) do
