@@ -21,7 +21,7 @@ defmodule CommonTest do
   end
 
   def test_file(file_path, options) do
-    suites = lc mod inlist extract_modules(file_path), is_test?(mod), do: mod
+    suites = for mod <- extract_modules(file_path), is_test?(mod), do: mod
     case suites do
       [] -> []
       suites ->
@@ -33,7 +33,7 @@ defmodule CommonTest do
   def scan(paths) do
     files =
       Enum.concat(
-        lc path inlist paths do
+        for path <- paths do
           if File.regular?(path) do
             [path]
           else
@@ -48,7 +48,7 @@ defmodule CommonTest do
   end
 
   def extract_modules(file_path) do
-    lc {m, _} inlist :elixir_compiler.file(file_path), do: m
+    for {m, _} <- :elixir_compiler.file(file_path), do: m
   end
 
   def is_test?(module) do
@@ -136,11 +136,11 @@ defmodule CommonTest.Suite do
                                 persist: false, accumulate: true
 
       def all do
-        lc {:all, [test]} inlist module_info(:attributes), do: test
+        for {:all, [test]} <- module_info(:attributes), do: test
       end
 
       def groups do
-        lc {:groups, [group]} inlist module_info(:attributes), do: group
+        for {:groups, [group]} <- module_info(:attributes), do: group
       end
 
       defoverridable [suite: 0, __init__: 1, __end__: 1, __init_group__: 2, __end_group__: 2, __init_testcase__: 2, __end_testcase__: 2]

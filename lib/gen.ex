@@ -23,7 +23,7 @@ defmodule GenX.Gen do
       _  -> (quote do: {unquote_splicing([function|arguments])})
     end
     arguments_stub =
-        lc argn inlist :lists.seq(1, length(arguments)) do
+        for argn <- :lists.seq(1, length(arguments)) do
           quote do: var!(unquote(binary_to_atom("arg_#{argn}")), __MODULE__)
         end
     full_arguments =
@@ -42,7 +42,7 @@ defmodule GenX.Gen do
               :server -> (quote do: server)
               val -> val
     end
-    extra_handle_arguments = lc e inlist (extras[:handle] || []), do: options[e] || (quote do: _)
+    extra_handle_arguments = for e <- (extras[:handle] || []), do: options[e] || (quote do: _)
     before_request_send_arguments = extras[:before_request] || []
     extra_send_arguments = extras[:send] || []
     args = Enum.concat [server|before_request_send_arguments],

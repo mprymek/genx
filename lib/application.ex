@@ -1,4 +1,4 @@
-defmodule Application do
+defmodule GenX.Application do
   @moduledoc "Application startup and shutdown functionality"
 
   defdelegate [load(app_descr), load(app_descr, distributed),
